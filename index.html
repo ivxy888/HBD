@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#08090d">
+  <meta name="description" content="A cinematic birthday experience for Shanal.">
+  <title>HBD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="experience" aria-label="Shanal's birthday experience">
+    <section id="penthouse" aria-label="Penthouse overlooking the city at night">
+      <div class="scene-backdrop" aria-hidden="true"></div>
+      <div class="scene-photo" role="img" aria-label="Luxury penthouse overlooking a nighttime city skyline"></div>
+      <div class="window-reflection" aria-hidden="true"></div>
+      <div id="glow" aria-hidden="true"></div>
+      <!-- The selected penthouse photograph already includes the birthday lettering and fireworks. -->
+    </section>
+
+    <section id="elevator" aria-label="Private elevator">
+      <div class="wall" aria-hidden="true"></div>
+      <div class="ceiling-light" aria-hidden="true"></div>
+      <div class="indicator" id="indicator"><span class="arrow">▲</span><span id="floor">1</span></div>
+      <div class="opening">
+        <div class="door left"></div>
+        <div class="door right"></div>
+      </div>
+      <div class="floor-reflection" aria-hidden="true"></div>
+    </section>
+
+    <div id="grain" aria-hidden="true"></div>
+    <div id="loading" role="status"><span></span><p>Preparing your evening</p></div>
+    <button id="start" type="button"><span class="start-ring"></span><span>Enter</span></button>
+    <button id="sound" class="ctl" type="button" aria-label="Mute sound" aria-pressed="false">♪</button>
+    <button id="restart" class="ctl" type="button" aria-label="Restart experience">↻</button>
+    <p id="sound-hint">Sound begins after you enter</p>
+  </main>
+
+  <audio id="a-amb" src="assets/audio/elevator-ambience.mp3" preload="auto" loop></audio>
+  <audio id="a-bell" src="assets/audio/elevator-bell.mp3" preload="auto"></audio>
+  <audio id="a-music" src="assets/audio/background-music.mp3" preload="auto" loop></audio>
+  <audio id="a-fw" src="assets/audio/firework.mp3" preload="auto"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
