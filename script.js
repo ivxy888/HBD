@@ -20,7 +20,7 @@ function loadScene() {
     els.loading.classList.add('ready');
     console.error('Penthouse image could not be loaded. Check assets/images/penthouse-interior.png');
   };
-  img.src = 'assets/images/penthouse-interior.png';
+  img.src = 'penthouse-interior.png';
   if (img.complete && img.naturalWidth) els.loading.classList.add('ready');
 }
 
