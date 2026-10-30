@@ -221,7 +221,7 @@ function begin() {
   els.start.classList.add('hide');
   ['1', '6', '12', '18', '25', '31', '37', '43', 'PH'].forEach((value, index) => later(() => { els.floor.textContent = value; }, 450 + index * 440));
   later(() => { ringBell(); els.indicator.classList.add('arrived'); }, 4200);
-  later(() => { els.elevator.classList.add('open'); fadeAudio(audio.ambience, 0, 2600, true); }, 5000);
+  later(() => { els.elevator.classList.add('open'); fadeAudio(audio.ambience, 0, 2600, true); startSoundtrack(); }, 5000);
   later(() => { els.elevator.classList.add('walk'); els.penthouse.classList.add('fly'); }, 6200);
   later(() => { els.elevator.classList.add('gone'); }, 9300);
   later(() => { startSoundtrack(); els.penthouse.classList.add('celebration'); startFireworks(); fireworksLaunchLoop(performance.now()); }, 11200);
