@@ -37,7 +37,7 @@ async function playAudio(key, volume = .5, loop = false) {
   catch (_) { audioFailures.add(key); return false; }
 }
 function stopAudio() {
-  Object.values(audio).forEach(a => { a.pause(); try { a.currentTime = 0; } catch (_) {} });
+  Object.values(audio).forEach(a => { if (!a) return; a.pause(); try { a.currentTime = 0; } catch (_) {} });
 }
 function fadeAudio(item, target, duration, pauseAtEnd = false) {
   if (!item || item.paused) return;
@@ -60,8 +60,9 @@ function synthBell() {
     osc.connect(gain).connect(masterGain); osc.start(t); osc.stop(t + 2.3);
   });
 }
-async function ringBell() { if (!(await playAudio('bell', .75))) synthBell(); }
+async function ringBell() { synthBell(); }
 function startSoundtrack() {
+  stopAudio();
   playAudio('music', .0, true).then(ok => { if (ok) fadeAudio(audio.music, .42, 6500); });
 }
 function updateSoundButton() {
@@ -72,14 +73,10 @@ function updateSoundButton() {
 }
 els.sound.addEventListener('click', async () => {
   muted = !muted; updateSoundButton();
-  Object.values(audio).forEach(a => a.muted = muted);
+  Object.values(audio).forEach(a => { if (a) a.muted = muted; });
   if (masterGain) masterGain.gain.setTargetAtTime(muted ? 0 : .85, audioContext.currentTime, .08);
-  if (!muted && started) {
-    initAudio();
-    if (audio.music.paused) startSoundtrack();
-  }
+  if (!muted && started && audio.music.paused) startSoundtrack();
 });
-
 
 // Photographic-style fireworks overlay: rising rockets, bright bursts, falling embers and glow.
 const fwCanvas = $('fireworks');
@@ -128,7 +125,6 @@ function burstRocket(r) {
       twinkle: Math.random() * Math.PI * 2
     });
   }
-  // A brief central flash makes the burst illuminate the sky.
   fwSparks.push({x:r.x,y:r.y,vx:0,vy:0,life:10,maxLife:10,size:26,hue,flash:true});
 }
 function drawFireworks() {
@@ -217,14 +213,13 @@ function reset() {
 }
 function begin() {
   reset(); started = true; initAudio(); updateSoundButton();
-  playAudio('ambience', .36, true);
   els.start.classList.add('hide');
   ['1', '6', '12', '18', '25', '31', '37', '43', 'PH'].forEach((value, index) => later(() => { els.floor.textContent = value; }, 450 + index * 440));
   later(() => { ringBell(); els.indicator.classList.add('arrived'); }, 4200);
-  later(() => { els.elevator.classList.add('open'); fadeAudio(audio.ambience, 0, 2600, true); }, 5000);
-  later(() => { els.elevator.classList.add('walk'); els.penthouse.classList.add('fly'); }, 6200);
+  later(() => { els.elevator.classList.add('open'); }, 5000);
+  later(() => { startSoundtrack(); els.elevator.classList.add('walk'); els.penthouse.classList.add('fly'); }, 6200);
   later(() => { els.elevator.classList.add('gone'); }, 9300);
-  later(() => { startSoundtrack(); els.penthouse.classList.add('celebration'); startFireworks(); fireworksLaunchLoop(performance.now()); }, 11200);
+  later(() => { els.penthouse.classList.add('celebration'); startFireworks(); fireworksLaunchLoop(performance.now()); }, 11200);
 }
 els.start.addEventListener('click', begin);
 els.restart.addEventListener('click', begin);
