@@ -18,7 +18,7 @@ function loadScene() {
   img.onload = () => els.loading.classList.add('ready');
   img.onerror = () => {
     els.loading.classList.add('ready');
-    console.error('Penthouse image could not be loaded. Check assets/images/penthouse-interior.png');
+    console.error('Penthouse image could not be loaded. Check penthouse-interior.png');
   };
   img.src = 'penthouse-interior.png';
   if (img.complete && img.naturalWidth) els.loading.classList.add('ready');
